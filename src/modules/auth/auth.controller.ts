@@ -53,7 +53,7 @@ const getMyProfile = catchAsync(
     const result = await authService.getMyProfile(userId);
     sendResponse(res, {
       success: true,
-      statusCode: httpStatus.CREATED,
+      statusCode: httpStatus.OK,
       message: "Profile get successfully",
       data: result,
     });
