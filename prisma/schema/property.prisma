@@ -4,7 +4,7 @@ model Property {
   user       User   @relation(fields: [landlordId], references: [id])
 
   categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
 
   title       String
   description String

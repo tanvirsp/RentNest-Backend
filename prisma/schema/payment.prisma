@@ -20,6 +20,7 @@ model Payment {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
+    // relations
     rentalRequest RentalRequest @relation(fields: [rentalRequestId], references: [id], onDelete: Cascade)
     tenant        User          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
