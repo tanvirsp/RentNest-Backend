@@ -1,7 +1,7 @@
 model Property {
   id         String @id @default(uuid())
   landlordId String
-  user       User   @relation(fields: [landlordId], references: [id])
+  landlord   User   @relation(fields: [landlordId], references: [id])
 
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
@@ -35,4 +35,6 @@ model Property {
 
   rentalRequests RentalRequest[]
   reviews        Review[]
+
+  @@map("properties")
 }

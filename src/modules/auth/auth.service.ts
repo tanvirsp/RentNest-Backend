@@ -40,9 +40,17 @@ const registerUser = async (payload: RegisterUserPayload) => {
 const loginUser = async (payload: ILogin) => {
   const { email, password } = payload;
 
-  const user = await prisma.user.findFirstOrThrow({
+  const user = await prisma.user.findUnique({
     where: { email },
   });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  if (user.status === "BAN") {
+    throw new Error("Your account has been BANNED please contact support");
+  }
 
   const isPasswordMatched = await bcrypt.compare(password, user.password);
 

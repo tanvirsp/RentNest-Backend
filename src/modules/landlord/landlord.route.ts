@@ -11,6 +11,9 @@ router.post(
   auth(Role.LANDLORD),
   landlordController.createProperty,
 );
+
+router.get("/properties", auth(Role.LANDLORD), landlordController.myProperties);
+
 router.put(
   "/properties/:id",
   auth(Role.LANDLORD),
@@ -24,12 +27,14 @@ router.delete(
 router.get(
   "/requests",
   auth(Role.LANDLORD),
-  landlordController.propertiesByLandlord,
+  landlordController.allRentalRequestForProperties,
 );
 router.patch(
   "/requests/:id",
   auth(Role.LANDLORD),
   landlordController.approveOrRejectRequest,
 );
+
+router.get("/archive", auth(Role.LANDLORD), landlordController.rentalArchive);
 
 export const landlordRoutes = router;

@@ -17,5 +17,5 @@ model RentalRequest {
   payment Payment?
   reviews Review?
 
-  @@map("rental-requests")
+  @@map("rental-request")
 }

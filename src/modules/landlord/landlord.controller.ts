@@ -22,6 +22,20 @@ const createProperty = catchAsync(
   },
 );
 
+const myProperties = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const landlordId = req.user?.id;
+    const result = await landlordService.myProperties(landlordId as string);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Property created successfully",
+      data: result,
+    });
+  },
+);
+
 const updateProperty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const propertyId = req.params.id as string;
@@ -38,21 +52,73 @@ const updateProperty = catchAsync(
 );
 
 const deleteProperty = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const propertyId = req.params.id as string;
+    await landlordService.deleteProperty(propertyId);
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Property delete successfully",
+      data: {},
+    });
+  },
 );
 
-const propertiesByLandlord = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+const allRentalRequestForProperties = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const landlordId = req.user?.id as string;
+    const result =
+      await landlordService.allRentalRequestForProperties(landlordId);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Property request successfully",
+      data: result,
+    });
+  },
 );
 
 const approveOrRejectRequest = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
+  async (req: Request, res: Response, next: NextFunction) => {
+    const rentalId = req.params.id as string;
+    const payload = req.body;
+
+    const result = await landlordService.approveOrRejectRequest(
+      rentalId,
+      payload,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Property request successfully",
+      data: result,
+    });
+  },
+);
+
+const rentalArchive = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const landlordId = req.user?.id as string;
+
+    const result = await landlordService.rentalArchive(landlordId);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "All archive rent request retrieved successfully",
+      data: result,
+    });
+  },
 );
 
 export const landlordController = {
   createProperty,
+  myProperties,
   updateProperty,
   deleteProperty,
-  propertiesByLandlord,
+  allRentalRequestForProperties,
   approveOrRejectRequest,
+  rentalArchive,
 };
