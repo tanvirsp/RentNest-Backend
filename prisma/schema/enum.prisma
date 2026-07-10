@@ -28,7 +28,12 @@ enum RentalRequestStatus {
 
 enum PaymentStatus {
   PENDING
-  SUCCESS
+  PAID
   FAILED
+  CANCELLED
   REFUNDED
+}
+
+enum PaymentProvider {
+  SSLCOMMERZ
 }

@@ -35,6 +35,12 @@ router.patch(
   landlordController.approveOrRejectRequest,
 );
 
+router.patch(
+  "/properties/status",
+  auth(Role.LANDLORD),
+  landlordController.changePropertyStatus,
+);
+
 router.get("/archive", auth(Role.LANDLORD), landlordController.rentalArchive);
 
 export const landlordRoutes = router;

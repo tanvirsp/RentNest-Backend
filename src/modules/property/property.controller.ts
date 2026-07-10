@@ -8,7 +8,7 @@ const getAllPropertyWithFilter = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const query = req.query;
 
-    const result = await propertyService.getAllPropertyWithFilter(req.query);
+    const result = await propertyService.getAllPropertyWithFilter(query);
 
     sendResponse(res, {
       success: true,

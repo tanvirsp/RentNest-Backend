@@ -30,7 +30,7 @@ const myProperties = catchAsync(
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
-      message: "Property created successfully",
+      message: "Properties retrieve successfully",
       data: result,
     });
   },
@@ -98,6 +98,24 @@ const approveOrRejectRequest = catchAsync(
   },
 );
 
+const changePropertyStatus = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const landlordId = req.user?.id as string;
+    const payload = req.body;
+
+    const result = await landlordService.changePropertyStatus(
+      landlordId,
+      payload,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Property status update successfully",
+      data: result,
+    });
+  },
+);
 const rentalArchive = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const landlordId = req.user?.id as string;
@@ -121,4 +139,5 @@ export const landlordController = {
   allRentalRequestForProperties,
   approveOrRejectRequest,
   rentalArchive,
+  changePropertyStatus,
 };

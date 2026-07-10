@@ -17,4 +17,7 @@ export default {
 
   payment_success_url: process.env.STRIPE_WEBHOOK_SECRET!,
   payment_fail_url: process.env.STRIPE_WEBHOOK_SECRET!,
+
+  ssl_commerz_store_id: process.env.SSL_COMMERZ_STORE_ID!,
+  ssl_commerz_store_password: process.env.SSL_COMMERZ_STORE_PASSWORD!,
 };

@@ -6,11 +6,11 @@ model Payment {
     amount   Decimal @db.Decimal(10, 2)
     currency String  @default("BDT")
 
-    provider      String
+    provider      PaymentProvider
     paymentMethod String?
 
-    transactionId   String? @unique
-    paymentIntentId String? @unique
+    tranId String? @unique
+    valId  String? @unique
 
     status          PaymentStatus @default(PENDING)
     gatewayResponse Json?

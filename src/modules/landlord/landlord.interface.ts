@@ -21,3 +21,8 @@ export interface IUpdateProperty {
   images?: string[];
   status?: PropertyStatus;
 }
+
+export interface IUpdateStatus {
+  propertyId: string;
+  status: PropertyStatus;
+}

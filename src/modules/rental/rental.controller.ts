@@ -23,9 +23,9 @@ const submitRental = catchAsync(
 const myAllRentalRequest = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const tenantId = req.user?.id as string;
-    console.log(tenantId);
+    const query = req.query;
 
-    const result = await reantalService.myAllRentalRequest(tenantId);
+    const result = await reantalService.myAllRentalRequest(tenantId, query);
 
     sendResponse(res, {
       success: true,

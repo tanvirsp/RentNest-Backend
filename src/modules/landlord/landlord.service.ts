@@ -3,7 +3,7 @@ import {
   RentalRequestStatus,
 } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
-import { IUpdateProperty } from "./landlord.interface";
+import { IUpdateProperty, IUpdateStatus } from "./landlord.interface";
 
 const createProperty = async (
   userId: string,
@@ -115,6 +115,36 @@ const myProperties = async (landlordId: string) => {
   return result;
 };
 
+const changePropertyStatus = async (
+  landlordId: string,
+  payload: IUpdateStatus,
+) => {
+  const { propertyId, status } = payload;
+
+  const propertyData = await prisma.property.findUnique({
+    where: {
+      id: propertyId,
+      landlordId,
+    },
+  });
+
+  if (!propertyData) {
+    throw new Error("Property not found");
+  }
+
+  const result = await prisma.property.update({
+    where: {
+      id: propertyId,
+      landlordId,
+    },
+    data: {
+      status,
+    },
+  });
+
+  return result;
+};
+
 export const landlordService = {
   createProperty,
   updateProperty,
@@ -123,4 +153,5 @@ export const landlordService = {
   approveOrRejectRequest,
   rentalArchive,
   myProperties,
+  changePropertyStatus,
 };
