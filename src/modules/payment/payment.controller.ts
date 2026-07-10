@@ -3,16 +3,14 @@ import { NextFunction, Request, Response } from "express";
 import { sendResponse } from "../../utils/sendResponse";
 import { catchAsync } from "../../utils/catchAsync";
 import { paymentService } from "./payment.service";
+import { JwtPayload } from "jsonwebtoken";
 
 const createPayment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const rentalRequestId = req.body.rentalRequestId as string;
-    const tenantId = req.user?.id as string;
+    const user = req.user as JwtPayload;
 
-    const result = await paymentService.initiatePayment(
-      rentalRequestId,
-      tenantId,
-    );
+    const result = await paymentService.initiatePayment(rentalRequestId, user);
 
     sendResponse(res, {
       success: true,
@@ -30,7 +28,7 @@ const paymentSuccess = catchAsync(
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
-      message: "Payment Veriry successfully",
+      message: "Payment Verify successfully",
       data: result,
     });
   },

@@ -9,8 +9,8 @@ model Payment {
     provider      PaymentProvider
     paymentMethod String?
 
-    tranId String? @unique
-    valId  String? @unique
+    transactionId String? @unique
+    valId         String? @unique
 
     status          PaymentStatus @default(PENDING)
     gatewayResponse Json?
