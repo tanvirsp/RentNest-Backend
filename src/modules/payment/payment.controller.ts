@@ -45,7 +45,7 @@ const paymentFail = catchAsync(
 
     sendResponse(res, {
       success: false,
-      statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+      statusCode: httpStatus.BAD_REQUEST,
       message: "Payment Fail",
       data: "",
     });
@@ -56,7 +56,7 @@ const paymentCancel = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     sendResponse(res, {
       success: false,
-      statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+      statusCode: httpStatus.BAD_REQUEST,
       message: "Your payment has been cancel",
       data: "",
     });

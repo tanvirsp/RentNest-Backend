@@ -14,6 +14,10 @@ const createProperty = async (
     item.trim().toLowerCase(),
   );
 
+  if (isNaN(Number(payload.rentAmount)) || Number(payload.rentAmount) <= 0) {
+    throw new Error("Rent amount must be a valid positive number");
+  }
+
   const result = await prisma.property.create({
     data: {
       ...payload,
