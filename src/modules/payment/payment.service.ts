@@ -16,6 +16,15 @@ const initiatePayment = async (rentalRequestId: string, user: JwtPayload) => {
     },
   });
 
+  if (!rentalRequest) {
+    throw new Error(
+      "Sorry this rental request not found, please check Rental Request ID",
+    );
+  }
+  if (rentalRequest?.status === "COMPLETED") {
+    throw new Error("Sorry your rental request is already complated");
+  }
+
   if (rentalRequest?.status !== "APPROVED") {
     throw new Error(
       "Sorry your rental request is not approved, please contact the Landlord",
