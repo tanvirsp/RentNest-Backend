@@ -68,7 +68,7 @@ const initiatePayment = async (rentalRequestId: string, user: JwtPayload) => {
     currency: "BDT",
     tran_id: tran_id,
     success_url: `${config.app_url}/api/payments/success`,
-    fail_url: `${config.app_url}/api/payments/fail/`,
+    fail_url: `${config.app_url}/api/payments/fail`,
     cancel_url: `${config.app_url}/api/payments/cancel`,
     cus_name: user.name,
     cus_email: user.email,
