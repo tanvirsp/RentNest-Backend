@@ -13,3 +13,10 @@ export interface ILogin {
   email: string;
   password: string;
 }
+
+export interface IUpdatePayload {
+  name: string;
+  email: string;
+  phone?: string;
+  avatar?: string;
+}

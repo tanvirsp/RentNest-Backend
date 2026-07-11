@@ -127,12 +127,22 @@ const paymentSuccess = async (payload: SSLCommerzSuccessPayload) => {
     });
 
     //update Rental Request status
-    await tx.rentalRequest.update({
+    const UpdteRentalData = await tx.rentalRequest.update({
       where: {
         id: paymentData.rentalRequestId,
       },
       data: {
         status: "ACTIVE",
+      },
+    });
+
+    //update Property Status To RENTED
+    await tx.property.update({
+      where: {
+        id: UpdteRentalData.propertyId,
+      },
+      data: {
+        status: "RENTED",
       },
     });
 
@@ -167,8 +177,24 @@ const paymentDetails = async (paymentId: string) => {
       id: paymentId,
     },
     include: {
-      tenant: true,
-      rentalRequest: true,
+      tenant: {
+        select: {
+          name: true,
+          email: true,
+          phone: true,
+          avatar: true,
+        },
+      },
+      rentalRequest: {
+        select: {
+          id: true,
+          propertyId: true,
+          moveInDate: true,
+          leaseMonths: true,
+          status: true,
+          message: true,
+        },
+      },
     },
   });
 

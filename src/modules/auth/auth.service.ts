@@ -2,7 +2,7 @@ import { SignOptions } from "jsonwebtoken";
 import config from "../../config";
 import { prisma } from "../../lib/prisma";
 import { jwtUtils } from "../../utils/jwt";
-import { ILogin, RegisterUserPayload } from "./auth.interface";
+import { ILogin, IUpdatePayload, RegisterUserPayload } from "./auth.interface";
 import bcrypt from "bcryptjs";
 
 const registerUser = async (payload: RegisterUserPayload) => {
@@ -91,8 +91,21 @@ const getMyProfile = async (userId: string) => {
   return user;
 };
 
+const updateProfile = async (userId: string, payload: IUpdatePayload) => {
+  const user = await prisma.user.update({
+    where: { id: userId },
+    data: payload,
+    omit: {
+      password: true,
+    },
+  });
+
+  return user;
+};
+
 export const authService = {
   registerUser,
   loginUser,
   getMyProfile,
+  updateProfile,
 };
