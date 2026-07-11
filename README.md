@@ -66,7 +66,8 @@ RentNest is a backend API for a rental property marketplace. Landlords can list 
 | ----------------- | -------------- |
 | Node.js + Express | REST API       |
 | TypeScript        | Type safety    |
-| Postgres + Prisma | Database + ORM |
+| Postgres          | Database       |
+| Prisma            | ORM            |
 | JWT               | Authentication |
 
 ### Deployment
