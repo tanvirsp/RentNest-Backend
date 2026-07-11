@@ -49,14 +49,40 @@ const paymentFail = catchAsync(
 
 const paymentCancel = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    // await paymentService.paymentCancel(req.body);
-    console.log(req.body);
-
     sendResponse(res, {
       success: false,
       statusCode: httpStatus.INTERNAL_SERVER_ERROR,
-      message: "Payment Cancel",
+      message: "Your payment has been cancel",
       data: "",
+    });
+  },
+);
+
+const paymentHistory = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const tenantId = req.user?.id as string;
+    const result = await paymentService.paymentHistory(tenantId);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Payment history retrieved successfully",
+      data: result,
+    });
+  },
+);
+
+const paymentDetails = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const paymentId = req.params.id as string;
+
+    const result = await paymentService.paymentDetails(paymentId);
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Payment details retrieved successfully",
+      data: result,
     });
   },
 );
@@ -66,4 +92,6 @@ export const paymentController = {
   paymentSuccess,
   paymentFail,
   paymentCancel,
+  paymentHistory,
+  paymentDetails,
 };

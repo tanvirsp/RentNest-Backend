@@ -96,6 +96,9 @@ const rentalArchive = async (landlordId: string) => {
       property: {
         landlordId: landlordId,
       },
+      status: {
+        in: ["APPROVED", "REJECTED", "ACTIVE", "COMPLETED"],
+      },
     },
     include: {
       reviews: true,

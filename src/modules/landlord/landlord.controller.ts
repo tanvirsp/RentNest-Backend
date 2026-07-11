@@ -92,7 +92,7 @@ const approveOrRejectRequest = catchAsync(
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
-      message: "Property request successfully",
+      message: `Property request ${result?.status} successfully`,
       data: result,
     });
   },

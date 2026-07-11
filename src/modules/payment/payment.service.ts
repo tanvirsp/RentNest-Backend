@@ -154,23 +154,31 @@ const paymentFail = async (payload: SSLCommerzPaymentFailResponse) => {
   });
 };
 
-const paymentCancel = async (payload: SSLCommerzPaymentFailResponse) => {
-  const { tran_id, card_issuer } = payload;
-  //update payment status
-  await prisma.payment.update({
+const paymentHistory = async (tenantId: string) => {
+  const result = await prisma.payment.findMany({
+    where: { tenantId },
+  });
+  return result;
+};
+
+const paymentDetails = async (paymentId: string) => {
+  const result = await prisma.payment.findUnique({
     where: {
-      transactionId: tran_id,
+      id: paymentId,
     },
-    data: {
-      status: "CANCELLED",
-      paymentMethod: card_issuer,
+    include: {
+      tenant: true,
+      rentalRequest: true,
     },
   });
+
+  return result;
 };
 
 export const paymentService = {
   initiatePayment,
   paymentSuccess,
   paymentFail,
-  paymentCancel,
+  paymentHistory,
+  paymentDetails,
 };
