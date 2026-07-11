@@ -8,6 +8,11 @@ import { JwtPayload } from "jsonwebtoken";
 const createPayment = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const rentalRequestId = req.body.rentalRequestId as string;
+
+    if (!rentalRequestId) {
+      throw new Error("Rental Request Id is required");
+    }
+
     const user = req.user as JwtPayload;
 
     const result = await paymentService.initiatePayment(rentalRequestId, user);
@@ -76,6 +81,9 @@ const paymentDetails = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const paymentId = req.params.id as string;
 
+    if (!paymentId) {
+      throw new Error("Payment Id is required");
+    }
     const result = await paymentService.paymentDetails(paymentId);
 
     sendResponse(res, {

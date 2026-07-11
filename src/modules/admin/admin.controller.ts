@@ -20,6 +20,11 @@ const getAllUsers = catchAsync(
 const changeUserStatus = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.params.id as string;
+
+    if (!userId) {
+      throw new Error("User Id is required");
+    }
+
     const status = req.body;
     const result = await adminService.changeUserStatus(userId, status);
 

@@ -41,6 +41,10 @@ const rentalDetails = catchAsync(
     const tenantId = req.user?.id as string;
     const rentalId = req.params.id as string;
 
+    if (!rentalId) {
+      throw new Error("Rental Id is required");
+    }
+
     const result = await reantalService.rentalDeatils(tenantId, rentalId);
 
     sendResponse(res, {

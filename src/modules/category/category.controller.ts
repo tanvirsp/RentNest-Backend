@@ -34,6 +34,11 @@ const allCategory = catchAsync(
 const updateCategory = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const categoryId = req.params.categoryId as string;
+
+    if (!categoryId) {
+      throw new Error("Category Id is required");
+    }
+
     const payload = req.body;
     const result = await categoryService.updateCategory(categoryId, payload);
 
@@ -49,6 +54,11 @@ const updateCategory = catchAsync(
 const deleteCategory = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const categoryId = req.params.categoryId as string;
+
+    if (!categoryId) {
+      throw new Error("Category Id is required");
+    }
+
     await categoryService.deleteCategory(categoryId);
     sendResponse(res, {
       success: true,
@@ -59,14 +69,9 @@ const deleteCategory = catchAsync(
   },
 );
 
-const categoryById = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {},
-);
-
 export const categoryController = {
   createCategory,
   updateCategory,
   deleteCategory,
   allCategory,
-  categoryById,
 };

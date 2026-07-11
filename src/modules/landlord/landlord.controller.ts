@@ -55,6 +55,11 @@ const deleteProperty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const landlordId = req.user?.id as string;
     const propertyId = req.params.id as string;
+
+    if (!propertyId) {
+      throw new Error("Property Id is required");
+    }
+
     await landlordService.deleteProperty(landlordId, propertyId);
     sendResponse(res, {
       success: true,
@@ -83,6 +88,11 @@ const allRentalRequestForProperties = catchAsync(
 const approveOrRejectRequest = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const rentalId = req.params.id as string;
+
+    if (!rentalId) {
+      throw new Error("Rental Id is required");
+    }
+
     const payload = req.body;
 
     const result = await landlordService.approveOrRejectRequest(

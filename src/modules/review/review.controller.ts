@@ -24,6 +24,10 @@ const updateReview = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const tenantId = req.user?.id as string;
     const reviewId = req.params.id as string;
+
+    if (!reviewId) {
+      throw new Error("Review Id is required");
+    }
     const payload = req.body;
 
     const result = await reviewService.updateReview(
