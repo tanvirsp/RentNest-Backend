@@ -77,4 +77,4 @@ RentNest is a backend API for a rental property marketplace. Landlords can list 
 
 ---
 
-## Live Backend Link:
+## Live Backend Link: https://rent-nest-backend-gamma.vercel.app
