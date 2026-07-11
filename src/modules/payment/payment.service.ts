@@ -1,6 +1,9 @@
 import axios from "axios";
 import config from "../../config";
-import { SSLCommerzSuccessPayload } from "./payment.interface";
+import {
+  SSLCommerzPaymentFailResponse,
+  SSLCommerzSuccessPayload,
+} from "./payment.interface";
 import { prisma } from "../../lib/prisma";
 import { JwtPayload } from "jsonwebtoken";
 
@@ -81,7 +84,7 @@ const initiatePayment = async (rentalRequestId: string, user: JwtPayload) => {
 };
 
 const paymentSuccess = async (payload: SSLCommerzSuccessPayload) => {
-  const { val_id, tran_id, amount } = payload;
+  const { val_id, tran_id, amount, card_type } = payload;
 
   //Verify Payment
   const url =
@@ -119,7 +122,7 @@ const paymentSuccess = async (payload: SSLCommerzSuccessPayload) => {
         status: "PAID",
         valId: val_id,
         paidAt: new Date(),
-        paymentMethod: payload.card_type,
+        paymentMethod: card_type,
       },
     });
 
@@ -137,7 +140,37 @@ const paymentSuccess = async (payload: SSLCommerzSuccessPayload) => {
   });
 };
 
+const paymentFail = async (payload: SSLCommerzPaymentFailResponse) => {
+  const { tran_id, card_issuer } = payload;
+  //update payment status
+  await prisma.payment.update({
+    where: {
+      transactionId: tran_id,
+    },
+    data: {
+      status: "FAILED",
+      paymentMethod: card_issuer,
+    },
+  });
+};
+
+const paymentCancel = async (payload: SSLCommerzPaymentFailResponse) => {
+  const { tran_id, card_issuer } = payload;
+  //update payment status
+  await prisma.payment.update({
+    where: {
+      transactionId: tran_id,
+    },
+    data: {
+      status: "CANCELLED",
+      paymentMethod: card_issuer,
+    },
+  });
+};
+
 export const paymentService = {
   initiatePayment,
   paymentSuccess,
+  paymentFail,
+  paymentCancel,
 };

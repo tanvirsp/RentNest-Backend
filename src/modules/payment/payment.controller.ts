@@ -34,7 +34,36 @@ const paymentSuccess = catchAsync(
   },
 );
 
+const paymentFail = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    await paymentService.paymentFail(req.body);
+
+    sendResponse(res, {
+      success: false,
+      statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+      message: "Payment Fail",
+      data: "",
+    });
+  },
+);
+
+const paymentCancel = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    // await paymentService.paymentCancel(req.body);
+    console.log(req.body);
+
+    sendResponse(res, {
+      success: false,
+      statusCode: httpStatus.INTERNAL_SERVER_ERROR,
+      message: "Payment Cancel",
+      data: "",
+    });
+  },
+);
+
 export const paymentController = {
   createPayment,
   paymentSuccess,
+  paymentFail,
+  paymentCancel,
 };
