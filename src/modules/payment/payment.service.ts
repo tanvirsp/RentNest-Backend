@@ -177,6 +177,7 @@ const paymentHistory = async (tenantId: string) => {
   const result = await prisma.payment.findMany({
     where: { tenantId },
   });
+
   return result;
 };
 
