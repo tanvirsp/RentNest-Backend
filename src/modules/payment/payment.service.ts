@@ -132,7 +132,7 @@ const paymentSuccess = async (payload: SSLCommerzSuccessPayload) => {
         id: paymentData.rentalRequestId,
       },
       data: {
-        status: "COMPLETED",
+        status: "ACTIVE",
       },
     });
 

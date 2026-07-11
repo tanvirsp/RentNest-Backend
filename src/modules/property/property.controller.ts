@@ -13,7 +13,7 @@ const getAllPropertyWithFilter = catchAsync(
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
-      message: "Review added successfully",
+      message: "All properties retrieved successfully",
       data: result,
     });
   },

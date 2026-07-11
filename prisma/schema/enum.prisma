@@ -19,11 +19,8 @@ enum RentalRequestStatus {
   PENDING
   APPROVED
   REJECTED
-  PAYMENT_PENDING
-  PAID
   ACTIVE
   COMPLETED
-  CANCELLED
 }
 
 enum PaymentStatus {

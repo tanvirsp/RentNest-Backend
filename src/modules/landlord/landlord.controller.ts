@@ -73,7 +73,7 @@ const allRentalRequestForProperties = catchAsync(
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
-      message: "Property request successfully",
+      message: "All rental request retrieved successfully",
       data: result,
     });
   },
