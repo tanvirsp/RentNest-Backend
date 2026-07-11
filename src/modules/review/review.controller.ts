@@ -20,6 +20,28 @@ const createReview = catchAsync(
   },
 );
 
+const updateReview = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const tenantId = req.user?.id as string;
+    const reviewId = req.params.id as string;
+    const payload = req.body;
+
+    const result = await reviewService.updateReview(
+      reviewId,
+      tenantId,
+      payload,
+    );
+
+    sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Review update successfully",
+      data: result,
+    });
+  },
+);
+
 export const reviewController = {
   createReview,
+  updateReview,
 };

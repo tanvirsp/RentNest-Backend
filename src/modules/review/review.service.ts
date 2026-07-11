@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma";
-import { IReview } from "./review.interface";
+import { IReview, IUpdateReview } from "./review.interface";
 
 const createReview = async (tenantId: string, payload: IReview) => {
   const { rating, comment, rentalRequestId } = payload;
@@ -29,6 +29,34 @@ const createReview = async (tenantId: string, payload: IReview) => {
   return result;
 };
 
+const updateReview = async (
+  reviewId: string,
+  tenantId: string,
+  payload: IUpdateReview,
+) => {
+  const findReview = await prisma.review.findUnique({
+    where: {
+      id: reviewId,
+      tenantId,
+    },
+  });
+
+  if (!findReview) {
+    throw new Error("Sorry review data is not found");
+  }
+
+  const result = await prisma.review.update({
+    where: {
+      id: reviewId,
+      tenantId,
+    },
+    data: payload,
+  });
+
+  return result;
+};
+
 export const reviewService = {
   createReview,
+  updateReview,
 };

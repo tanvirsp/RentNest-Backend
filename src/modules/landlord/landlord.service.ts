@@ -33,8 +33,24 @@ const updateProperty = async (propertyId: string, payload: IUpdateProperty) => {
   return result;
 };
 
-const deleteProperty = async (propertyId: string) => {
-  await prisma.property.delete({ where: { id: propertyId } });
+const deleteProperty = async (landlordId: string, propertyId: string) => {
+  const findProperty = await prisma.property.findUnique({
+    where: {
+      id: propertyId,
+      landlordId,
+    },
+  });
+
+  if (!findProperty) {
+    throw new Error("Sorry property not found");
+  }
+
+  await prisma.property.delete({
+    where: {
+      id: propertyId,
+      landlordId,
+    },
+  });
 };
 
 const allRentalRequestForProperties = async (landlordId: string) => {

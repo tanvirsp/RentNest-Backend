@@ -7,5 +7,6 @@ import { reviewController } from "./review.controller";
 const router = Router();
 
 router.post("/", auth(Role.TENANT), reviewController.createReview);
+router.patch("/:id", auth(Role.TENANT), reviewController.updateReview);
 
 export const reviewRoutes = router;

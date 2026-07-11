@@ -53,8 +53,9 @@ const updateProperty = catchAsync(
 
 const deleteProperty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
+    const landlordId = req.user?.id as string;
     const propertyId = req.params.id as string;
-    await landlordService.deleteProperty(propertyId);
+    await landlordService.deleteProperty(landlordId, propertyId);
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
