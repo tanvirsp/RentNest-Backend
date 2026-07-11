@@ -70,6 +70,10 @@ RentNest is a backend API for a rental property marketplace. Landlords can list 
 | Prisma            | ORM            |
 | JWT               | Authentication |
 
+---
+
+### For Payment: SSL COMMERZ
+
 ### Deployment
 
 | Service | Purpose                |
